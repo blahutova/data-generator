@@ -1,4 +1,4 @@
-package cz.muni.fi.generatorOfData;
+package cz.muni.fi.generatorOfData.dataGeneratorAPI;
 
 import org.apache.commons.csv.CSVRecord;
 

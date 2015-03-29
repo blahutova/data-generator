@@ -1,4 +1,4 @@
-package cz.muni.fi.generatorOfData;
+package cz.muni.fi.generatorOfData.dataGeneratorAPI;
 
 /**
  * Interface for sending one line of data in the way of user's needs.

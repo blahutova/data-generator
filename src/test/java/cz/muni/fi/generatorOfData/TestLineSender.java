@@ -1,5 +1,8 @@
 package cz.muni.fi.generatorOfData;
 
+import cz.muni.fi.generatorOfData.dataGeneratorAPI.DataLine;
+import cz.muni.fi.generatorOfData.dataGeneratorAPI.LineSender;
+
 import java.util.ArrayList;
 import java.util.List;
 

@@ -1,6 +1,7 @@
 package cz.muni.fi.generatorOfData;
 
-import org.junit.After;
+import cz.muni.fi.generatorOfData.dataGeneratorAPI.DataLine;
+import cz.muni.fi.generatorOfData.dataGeneratorAPI.Generator;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -76,7 +77,7 @@ public class GeneratorTest {
     }
 
     @Test
-    public void testNextLineWithEmptySmartPlugSource() throws Exception {
+    public void testNextLineWithEmptyLineSource() throws Exception {
         List<DataLine> emptyList = new ArrayList<DataLine>();
         TestLineSource emptySource = new TestLineSource(emptyList);
         Generator generator = new Generator(emptySource, lineSender);
@@ -96,27 +97,5 @@ public class GeneratorTest {
         generator.start();
         Long timeAfter = System.currentTimeMillis();
         assertEquals(timeAfter-timeBefore, 2 * (shortList.get(1).getTimestamp() - shortList.get(0).getTimestamp()));
-    }
-
-    @Test
-    public void testOrderingOfLinesWithOrder() throws  Exception {
-        LineSource unsortedSource = new TestLineSource(unsortedList);
-        Generator generator = new Generator(unsortedSource, lineSender);
-        generator.start();
-        List<DataLine> sortedList = lineSender.getListOfLines();
-        for (int i = 0; i < sortedList.size() - 1; i++) {
-            assertTrue(sortedList.get(i).getTimestamp() <= sortedList.get(i + 1).getTimestamp());
-        }
-    }
-
-    @Test
-    public void testOrderingOfLinesWithoutOrder() throws  Exception {
-        LineSource unsortedSource = new TestLineSource(unsortedListWithoutOrder);
-        Generator generator = new Generator(unsortedSource, lineSender);
-        generator.start();
-        List<DataLine> sortedList = lineSender.getListOfLines();
-        for (int i = 0; i < sortedList.size() - 1; i++) {
-            assertTrue(sortedList.get(i).getTimestamp() <= sortedList.get(i + 1).getTimestamp());
-        }
     }
 }

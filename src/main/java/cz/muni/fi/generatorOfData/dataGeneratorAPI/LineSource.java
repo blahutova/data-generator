@@ -1,6 +1,4 @@
-package cz.muni.fi.generatorOfData;
-
-import org.apache.commons.csv.CSVRecord;
+package cz.muni.fi.generatorOfData.dataGeneratorAPI;
 
 import java.io.IOException;
 
@@ -38,4 +36,11 @@ public interface LineSource {
      * @return DataLine object which represents given line from file
      */
     public DataLine makeDataLineFromLine(Object line);
+
+    /**
+     * Method for closing stream, from which was created LineSource.
+     *
+     * @throws IOException
+     */
+    public void close() throws IOException;
 }

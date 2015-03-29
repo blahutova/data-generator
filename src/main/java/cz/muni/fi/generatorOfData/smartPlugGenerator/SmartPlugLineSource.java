@@ -1,5 +1,8 @@
-package cz.muni.fi.generatorOfData;
+package cz.muni.fi.generatorOfData.smartPlugGenerator;
 
+import cz.muni.fi.generatorOfData.dataGeneratorAPI.DataLine;
+import cz.muni.fi.generatorOfData.dataGeneratorAPI.LineCoordinator;
+import cz.muni.fi.generatorOfData.dataGeneratorAPI.LineSource;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -64,6 +67,7 @@ public class SmartPlugLineSource implements LineSource {
         return data;
     }
 
+    @Override
     public void close() throws IOException {
         parser.close();
     }

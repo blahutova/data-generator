@@ -1,4 +1,4 @@
-package cz.muni.fi.generatorOfData;
+package cz.muni.fi.generatorOfData.dataGeneratorAPI;
 
 import java.io.IOException;
 
@@ -68,7 +68,7 @@ public class Generator {
         source.setToStart();
     }
 
-    private Long timeBetweenTwoLines(DataLine firstLine, DataLine secondLine, double speedCoefficient) {
+    public Long timeBetweenTwoLines(DataLine firstLine, DataLine secondLine, double speedCoefficient) {
         return (long) ((secondLine.getTimestamp() - firstLine.getTimestamp()) * speedCoefficient * 1000);
     }
 }

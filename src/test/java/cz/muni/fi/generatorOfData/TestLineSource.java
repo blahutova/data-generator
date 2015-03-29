@@ -1,9 +1,10 @@
 package cz.muni.fi.generatorOfData;
 
-import org.apache.commons.csv.CSVRecord;
+import cz.muni.fi.generatorOfData.dataGeneratorAPI.DataLine;
+import cz.muni.fi.generatorOfData.dataGeneratorAPI.LineCoordinator;
+import cz.muni.fi.generatorOfData.dataGeneratorAPI.LineSource;
 
 import java.io.IOException;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -11,7 +12,7 @@ import java.util.List;
  *
  * Created by Lucka on 17.2.2015.
  */
-public class TestLineSource implements LineSource{
+public class TestLineSource implements LineSource {
     private List<DataLine> listOfLines;
     private LineCoordinator lineCoordinator;
 
@@ -32,5 +33,10 @@ public class TestLineSource implements LineSource{
     @Override
     public DataLine makeDataLineFromLine(Object line) {
         return (DataLine) line;
+    }
+
+    @Override
+    public void close() throws IOException {
+
     }
 }

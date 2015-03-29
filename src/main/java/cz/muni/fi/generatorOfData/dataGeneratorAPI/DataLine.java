@@ -1,4 +1,4 @@
-package cz.muni.fi.generatorOfData;
+package cz.muni.fi.generatorOfData.dataGeneratorAPI;
 
 /**
  * Class representing one line of data from source. Every line must have a timestamp in seconds. Lines from some sources
