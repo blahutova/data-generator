@@ -1,8 +1,7 @@
-package cz.muni.fi.generatorOfData.smartPlugGenerator;
+package cz.muni.fi.data_generator.smartplugs;
 
-import cz.muni.fi.generatorOfData.dataGeneratorAPI.DataLine;
-import cz.muni.fi.generatorOfData.dataGeneratorAPI.LineCoordinator;
-import cz.muni.fi.generatorOfData.dataGeneratorAPI.LineSource;
+import cz.muni.fi.data_generator.generator.DataLine;
+import cz.muni.fi.data_generator.generator.LineSource;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -26,34 +25,41 @@ public class SmartPlugLineSource implements LineSource {
     private final static int POSITION_OF_TIMESTAMP = 1;
     private final static int POSITION_OF_ORDER = 0;
     private final static int NUMBER_OF_DATA_FIELDS = 6;
+    private final static int MAX_SIZE_OF_BUFFER = 1000;
     private Iterator<CSVRecord> csvParserIterator;
     private CSVParser parser;
     private File pathToCsv;
-    private LineCoordinator lineCoordinator;
+    private Queue<DataLine> sortedBufferOfLines = new PriorityQueue<DataLine>();
 
     public SmartPlugLineSource(File pathToCsv) throws IOException {
         this.pathToCsv = pathToCsv;
         this.parser = CSVParser.parse(pathToCsv, Charset.defaultCharset(), CSVFormat.DEFAULT);
         this.csvParserIterator = parser.iterator();
-        this.lineCoordinator = new LineCoordinator(csvParserIterator, this);
+        initializeSortedBufferOfLines();
     }
 
     @Override
     public DataLine nextLine() {
-        return lineCoordinator.nextLine();
+        if (sortedBufferOfLines.size() != 0) {
+            if (csvParserIterator.hasNext()) {
+                sortedBufferOfLines.add(makeDataLineFromLine(csvParserIterator.next()));
+            }
+            return sortedBufferOfLines.poll();
+        } else {
+            return null;
+        }
     }
 
     @Override
     public void setToStart() throws IOException {
         this.parser = CSVParser.parse(pathToCsv, Charset.defaultCharset(), CSVFormat.DEFAULT);
         this.csvParserIterator = parser.iterator();
-        lineCoordinator.setToStart(csvParserIterator);
+        sortedBufferOfLines.clear();
+        initializeSortedBufferOfLines();
     }
 
-    @Override
-    public DataLine makeDataLineFromLine(Object line) {
-            CSVRecord record = (CSVRecord) line;
-            return new DataLine(Long.parseLong(record.get(POSITION_OF_ORDER)), Long.parseLong(record.get(POSITION_OF_TIMESTAMP)), getDataFields(record));
+    public DataLine makeDataLineFromLine(CSVRecord line) {
+            return new DataLine(Long.parseLong(line.get(POSITION_OF_ORDER)), Long.parseLong(line.get(POSITION_OF_TIMESTAMP)) * 1000, getDataFields(line));
     }
 
     private String[] getDataFields(CSVRecord record) {
@@ -65,6 +71,12 @@ public class SmartPlugLineSource implements LineSource {
             iteratorForData++;
         }
         return data;
+    }
+
+    private void initializeSortedBufferOfLines() {
+        while (csvParserIterator.hasNext() && sortedBufferOfLines.size() < MAX_SIZE_OF_BUFFER) {
+            sortedBufferOfLines.add(makeDataLineFromLine(csvParserIterator.next()));
+        }
     }
 
     @Override

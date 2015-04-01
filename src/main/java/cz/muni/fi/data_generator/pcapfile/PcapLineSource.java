@@ -1,9 +1,9 @@
-package cz.muni.fi.generatorOfData.pcapFileGenerator;
+package cz.muni.fi.data_generator.pcapfile;
 
 import com.igormaznitsa.jbbp.io.JBBPBitInputStream;
 import com.igormaznitsa.jbbp.utils.JBBPUtils;
-import cz.muni.fi.generatorOfData.dataGeneratorAPI.DataLine;
-import cz.muni.fi.generatorOfData.dataGeneratorAPI.LineSource;
+import cz.muni.fi.data_generator.generator.DataLine;
+import cz.muni.fi.data_generator.generator.LineSource;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -53,11 +53,11 @@ public class PcapLineSource implements LineSource {
         headerOfFile = parserByEndianSystem.getHeaderParser().parse(inputStream).mapTo(PcapHeader.class);
     }
 
-    @Override
+
     public DataLine makeDataLineFromLine(Object line) {
         PcapPacket packet = (PcapPacket) line;
         String[] data = {packet.getPacketInformation(), packet.getDataInformation()};
-        return new DataLine((long) packet.getTimestampSeconds(), data);
+        return new DataLine((long) packet.getTimestampSeconds() * 1000, data);
     }
 
     @Override

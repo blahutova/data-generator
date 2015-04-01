@@ -1,12 +1,15 @@
-package cz.muni.fi.generatorOfData.dataGeneratorAPI;
+package cz.muni.fi.data_generator.generator;
+
+import java.io.Serializable;
+import java.util.Arrays;
 
 /**
  * Class representing one line of data from source. Every line must have a timestamp in seconds. Lines from some sources
- * can have also orders in which they were written to source.
+ * can have also orders, in which they were written to source.
  *
  * Created by Lucka on 10.2.2015.
  */
-public class DataLine implements Comparable<DataLine> {
+public class DataLine implements Comparable<DataLine>, Serializable {
     private Long timestamp;
     private Long order = null;
     private String[] data;
@@ -21,8 +24,8 @@ public class DataLine implements Comparable<DataLine> {
     }
 
     /**
-     * Returns timestamp, which indicates time, when was the line written
-     * to file. Timestamp is in seconds.
+     * Returns timestamp, which indicates time, when was the data created and written
+     * to file. Timestamp is in miliseconds.
      *
      * @return time, when the line was written to file in seconds
      */
@@ -72,10 +75,10 @@ public class DataLine implements Comparable<DataLine> {
         if (order != null) {
             lineInString = order.toString();
         }
-        lineInString = lineInString + " " + timestamp.toString();
-        for (int i = 0; i < data.length; i++) {
+        lineInString = lineInString + " " + timestamp.toString() + " " + Arrays.toString(data);
+        /*for (int i = 0; i < data.length; i++) {
             lineInString = lineInString + " " + data[i];
-        }
+        }*/
         return lineInString;
     }
 
@@ -85,9 +88,9 @@ public class DataLine implements Comparable<DataLine> {
             throw new NullPointerException();
         }
         if ((this.getTimestamp().equals(o.getTimestamp())) && order != null) {
-            return (int) (this.getOrder() - o.getOrder());
+            return Long.compare(this.getOrder(), o.getOrder());
         } else {
-            return (int) (this.getTimestamp() - o.getTimestamp());
+            return Long.compare(this.getTimestamp(), o.getTimestamp());
         }
     }
 }

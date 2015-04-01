@@ -1,4 +1,4 @@
-package cz.muni.fi.generatorOfData.dataGeneratorAPI;
+package cz.muni.fi.data_generator.generator;
 
 /**
  * Line sender for sending data to console.

@@ -1,8 +1,8 @@
-package cz.muni.fi.generatorOfData;
+package cz.muni.fi.data_generator;
 
-import cz.muni.fi.generatorOfData.dataGeneratorAPI.DataLine;
-import cz.muni.fi.generatorOfData.dataGeneratorAPI.LineSender;
-import cz.muni.fi.generatorOfData.dataGeneratorAPI.LineSource;
+import cz.muni.fi.data_generator.generator.DataLine;
+import cz.muni.fi.data_generator.generator.LineSender;
+import cz.muni.fi.data_generator.generator.LineSource;
 
 import java.io.IOException;
 

@@ -1,7 +1,7 @@
-package cz.muni.fi.generatorOfData;
+package cz.muni.fi.data_generator;
 
-import cz.muni.fi.generatorOfData.dataGeneratorAPI.DataLine;
-import cz.muni.fi.generatorOfData.dataGeneratorAPI.Generator;
+import cz.muni.fi.data_generator.generator.DataLine;
+import cz.muni.fi.data_generator.generator.Generator;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.*;
@@ -10,8 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GeneratorTest {
-    private List<DataLine> unsortedList;
-    private List<DataLine> unsortedListWithoutOrder;
+    private List<DataLine> sortedList;
     private List<DataLine> shortList;
     private TestLineSender lineSender;
 
@@ -20,54 +19,45 @@ public class GeneratorTest {
         lineSender = new TestLineSender();
         String[] array = new String[1];
         array[0] = "hello";
-        unsortedList = new ArrayList<DataLine>();
-        unsortedList.add(new DataLine(1l, 1l, array));
-        unsortedList.add(new DataLine(2l, 1l, array));
-        unsortedList.add(new DataLine(3l, 2l, array));
-        unsortedList.add(new DataLine(4l, 3l, array));
-        unsortedList.add(new DataLine(5l, 2l, array));
-        unsortedList.add(new DataLine(7l, 5l, array));
-        unsortedList.add(new DataLine(6l, 5l, array));
+        sortedList = new ArrayList<DataLine>();
+        sortedList.add(new DataLine(1l, 1000l, array));
+        sortedList.add(new DataLine(2l, 1000l, array));
+        sortedList.add(new DataLine(3l, 2000l, array));
+        sortedList.add(new DataLine(4l, 3000l, array));
+        sortedList.add(new DataLine(5l, 4000l, array));
+        sortedList.add(new DataLine(6l, 5000l, array));
+
 
         shortList = new ArrayList<DataLine>();
         shortList.add(new DataLine(1l, 1l, array));
         shortList.add(new DataLine(2l, 1l, array));
-
-        unsortedListWithoutOrder = new ArrayList<DataLine>();
-        unsortedListWithoutOrder.add(new DataLine(2l, array));
-        unsortedListWithoutOrder.add(new DataLine(1l, array));
-        unsortedListWithoutOrder.add(new DataLine(2l, array));
-        unsortedListWithoutOrder.add(new DataLine(3l, array));
-        unsortedListWithoutOrder.add(new DataLine(2l, array));
-        unsortedListWithoutOrder.add(new DataLine(6l, array));
-        unsortedListWithoutOrder.add(new DataLine(5l, array));
     }
 
     @Test
     public void testTimeBetweenTimestamps() throws Exception {
-        TestLineSource source = new TestLineSource(unsortedList);
+        TestLineSource source = new TestLineSource(sortedList);
         Generator generator = new Generator(source, lineSender);
         Long timeBefore = System.currentTimeMillis();
         generator.start();
         Long timeAfter = System.currentTimeMillis();
-        assertEquals(((timeAfter - timeBefore) / 1000), unsortedList.get(5).getTimestamp() - unsortedList.get(0).getTimestamp());
+        assertEquals(((timeAfter - timeBefore)), sortedList.get(5).getTimestamp() - sortedList.get(0).getTimestamp(), 1);
     }
 
     @Test
     public void testTimeBetweenTimestampsWithSpeed() throws Exception {
-        TestLineSource source = new TestLineSource(unsortedList);
+        TestLineSource source = new TestLineSource(sortedList);
         Generator generator = new Generator(source, lineSender);
         double speed = 0.5;
         Long timeBefore = System.currentTimeMillis();
         generator.startWithSpeed(speed);
         Long timeAfter = System.currentTimeMillis();
-        assertEquals(((timeAfter - timeBefore) / 1000), (unsortedList.get(5).getTimestamp() - unsortedList.get(0).getTimestamp()) * speed, 0.1);
+        assertEquals((timeAfter - timeBefore), (sortedList.get(5).getTimestamp() - sortedList.get(0).getTimestamp()) * speed, 1);
     }
 
     @Test
     public void testTimeWithZeroSpeed() throws Exception{
         double speed = 0;
-        TestLineSource source = new TestLineSource(unsortedList);
+        TestLineSource source = new TestLineSource(sortedList);
         Generator generator = new Generator(source, lineSender);
         try {
             generator.startWithSpeed(speed);

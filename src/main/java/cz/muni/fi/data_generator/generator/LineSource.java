@@ -1,9 +1,9 @@
-package cz.muni.fi.generatorOfData.dataGeneratorAPI;
+package cz.muni.fi.data_generator.generator;
 
 import java.io.IOException;
 
 /**
- * Interface for working with source (usually file) of data. It's able to parse
+ * Interface for working with source (usually file) of data. The implementations are able to parse
  * data and create DataLine objects from lines of source, so they can be sent to appropriate
  * LineSender.
  *
@@ -27,15 +27,6 @@ public interface LineSource {
      * @throws IOException if something is wrong with parsing the lines from source
      */
     public void setToStart() throws IOException;
-
-    /**
-     * While parsing the LineSource, you must create appropriate DataLine objects
-     * from parsed lines of file. This method creates DataLine from line achieved from file.
-     *
-     * @param line line achieved from file
-     * @return DataLine object which represents given line from file
-     */
-    public DataLine makeDataLineFromLine(Object line);
 
     /**
      * Method for closing stream, from which was created LineSource.

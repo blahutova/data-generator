@@ -1,4 +1,4 @@
-package cz.muni.fi.generatorOfData.dataGeneratorAPI;
+package cz.muni.fi.data_generator.generator;
 
 import java.io.IOException;
 
@@ -26,7 +26,7 @@ public class Generator {
 
     /**
      * Method, which starts sending data from LineSource with given LineSender. Data
-     * are sent in real-time speed, which indicate their timestamps.
+     * are sent in real-time speed, which is indicated by their timestamps.
      *
      * @throws IOException
      * @throws InterruptedException
@@ -39,6 +39,12 @@ public class Generator {
      * Method, which starts sending data from LineSource with given LineSender. Data
      * are sent in user-defined speed. It can accelerate or slow down the speed, which
      * indicate timestamps of lines.
+     * Real speed is multiplied by given coefficient. So it means that if you want faster speed, you
+     * must provide speed coefficient less than zero.
+     *
+     * For example:
+     * Time between two lines is 1000 miliseconds. If you provide speed coefficient 0.01,
+     * time between two lines will decrease to 10 miliseconds.
      *
      * @param speedCoefficient coefficient, which can can accelerate or slow down the speed of sending data
      * @throws IOException
@@ -69,7 +75,7 @@ public class Generator {
     }
 
     public Long timeBetweenTwoLines(DataLine firstLine, DataLine secondLine, double speedCoefficient) {
-        return (long) ((secondLine.getTimestamp() - firstLine.getTimestamp()) * speedCoefficient * 1000);
+        return (long) ((secondLine.getTimestamp() - firstLine.getTimestamp()) * speedCoefficient);
     }
 }
 
