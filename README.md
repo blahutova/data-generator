@@ -26,16 +26,16 @@ Implementation of Generation provides two places to send processed data: console
 
 <h2>Example usage</h2>
 <i>//provide the path to your file with data</i><br>
-File csv = new File("/path/to/file.csv");<br>
+<b>File csv = new File("/path/to/file.csv"); </b><br>
 <i>//create your implementation of LineSource and LineSender</i><br>
-HTTPLineSource lineSource = new HTTPLineSource(csv);<br>
-HTTPLineSender lineSender = new HTTPLineSender();<br>
+<b>HTTPLineSource lineSource = new HTTPLineSource(csv);</b><br>
+<b>HTTPLineSender lineSender = new HTTPLineSender();</b><br>
 <i>//create Generator with LineSource and LineSender</i><br>
-Generator generator = new Generator(lineSource, lineSender);<br>
+<b>Generator generator = new Generator(lineSource, lineSender);</b><br>
 <i>//start sending data to output</i><br>
-generator.startWithSpeed(0.5);<br>
+<b>generator.startWithSpeed(0.5);</b><br>
 <i>//don't forget to close the LineSource</i><br>
-lineSource.close();<br>
+<b>lineSource.close();</b><br>
 
 
 
