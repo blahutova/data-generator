@@ -1,6 +1,10 @@
 package cz.muni.fi.data_generator.generator;
 
+import cz.muni.fi.data_generator.distributedSending.Connection;
+import cz.muni.fi.data_generator.distributedSending.Server;
+
 import java.io.IOException;
+import java.util.*;
 
 /**
  * Class with basic methods for sending data. User can start sending data
@@ -76,6 +80,42 @@ public class Generator {
 
     public Long timeBetweenTwoLines(DataLine firstLine, DataLine secondLine, double speedCoefficient) {
         return (long) ((secondLine.getTimestamp() - firstLine.getTimestamp()) * speedCoefficient);
+    }
+
+    public void startDistributedSending(String[][] portsAndHostNames) throws IOException, InterruptedException {
+        //servers here are just for testing. They represent computers, where the data will be sent
+        createServersAccordingToPorts(portsAndHostNames);
+        DataLine firstLine = source.nextLine();
+        DataLine secondLine;
+        int currentPC = 0;
+        while (firstLine != null) {
+            if (currentPC == portsAndHostNames.length) {
+                currentPC = 0;
+            }
+            int currentPort = Integer.parseInt(portsAndHostNames[currentPC][0]);
+            String currentHostName = portsAndHostNames[currentPC][1];
+            sendAndReadDataFromServer(currentPort, currentHostName, firstLine, currentPC);
+            currentPC++;
+            if ((secondLine = source.nextLine()) == null) {
+                break;
+            }
+            Thread.sleep(timeBetweenTwoLines(firstLine, secondLine, 1));
+            firstLine = secondLine;
+        }
+    }
+
+    private void createServersAccordingToPorts(String[][] portsAndHostNames) {
+        HashSet<Server> listOfServers = new HashSet<Server>(portsAndHostNames.length);
+        for (int i = 0; i < portsAndHostNames.length; i++){
+            listOfServers.add(new Server(Integer.parseInt(portsAndHostNames[i][0])));
+        }
+    }
+
+    private void sendAndReadDataFromServer(int port, String hostName, DataLine line, int currentPC) {
+        Connection connection = new Connection(port, hostName);
+        System.out.println((currentPC + 1) + ". computer: ");
+        connection.sendDataLineToComputer(line);
+        connection.readResponseFromComputer();
     }
 }
 
