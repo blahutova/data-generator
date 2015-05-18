@@ -1,6 +1,5 @@
-package cz.muni.fi.data_generator.distributedSending;
+package cz.muni.fi.data_generator.distributed_sending;
 
-import com.sun.org.apache.xpath.internal.SourceTree;
 import cz.muni.fi.data_generator.generator.DataLine;
 
 import java.io.IOException;
@@ -10,14 +9,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
- * Created by lucka on 8.4.2015.
+ * Class representing thread for connection with server.
  */
 public class TcpThread extends Thread {
     // the socket where to listen/talk
-    Socket socket;
+    private Socket socket;
     private ServerSocket serverSocket;
-    ObjectInputStream socketInput;
-    ObjectOutputStream socketOutput;
+    private ObjectInputStream socketInput;
+    private ObjectOutputStream socketOutput;
 
     TcpThread(ServerSocket socket) {
         this.serverSocket = socket;

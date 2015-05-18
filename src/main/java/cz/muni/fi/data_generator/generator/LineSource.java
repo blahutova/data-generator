@@ -5,9 +5,8 @@ import java.io.IOException;
 /**
  * Interface for working with source (usually file) of data. The implementations are able to parse
  * data and create DataLine objects from lines of source, so they can be sent to appropriate
- * LineSender.
+ * LineSender.<br /><br />
  *
- * Created by Lucka on 10.2.2015.
  */
 public interface LineSource {
     /**

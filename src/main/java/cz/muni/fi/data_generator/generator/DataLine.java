@@ -7,7 +7,6 @@ import java.util.Arrays;
  * Class representing one line of data from source. Every line must have a timestamp in seconds. Lines from some sources
  * can have also orders, in which they were written to source.
  *
- * Created by Lucka on 10.2.2015.
  */
 public class DataLine implements Comparable<DataLine>, Serializable {
     private Long timestamp;

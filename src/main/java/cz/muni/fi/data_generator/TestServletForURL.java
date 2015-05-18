@@ -11,7 +11,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 
 /**
- * Created by lucka on 11.4.2015.
+ * Servlet for testing sending to URL address.
  */
 @WebServlet(urlPatterns = {"/test/*", "*.test"})
 public class TestServletForURL extends HttpServlet {

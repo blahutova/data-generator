@@ -1,4 +1,4 @@
-package cz.muni.fi.data_generator.pcapfile;
+package cz.muni.fi.data_generator.pcapfile_processing;
 
 import com.igormaznitsa.jbbp.JBBPParser;
 import com.igormaznitsa.jbbp.io.JBBPBitInputStream;
@@ -10,7 +10,6 @@ import java.io.IOException;
  * Class, which is caring for right parsing of pcap files. It determines Endian System of
  * pcap file, essential for their parsing.
  *
- * Created by Lucka on 26.3.2015.
  */
 public class PcapIdentifier {
     private JBBPParser packetParser;

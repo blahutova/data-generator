@@ -1,4 +1,4 @@
-package cz.muni.fi.data_generator.distributedSending;
+package cz.muni.fi.data_generator.distributed_sending;
 
 
 import cz.muni.fi.data_generator.generator.DataLine;
@@ -8,6 +8,9 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+/**
+ * Class for establishing connection with another servers.
+ */
 public class Connection {
 
     ObjectInputStream socketInput;

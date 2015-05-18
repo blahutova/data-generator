@@ -1,4 +1,4 @@
-package cz.muni.fi.data_generator.pcapfile;
+package cz.muni.fi.data_generator.pcapfile_processing;
 
 import com.igormaznitsa.jbbp.mapper.Bin;
 

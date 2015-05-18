@@ -10,14 +10,14 @@ import java.net.ProtocolException;
 import java.net.URL;
 
 /**
- * Created by lucka on 31.3.2015.
+ * Class for sending data to given URL address.
  */
-public class HTTPLineSender implements LineSender{
+public class UrlLineSender implements LineSender{
     private URL url;
     private HttpURLConnection connection;
     private ObjectOutputStream objectOutputStream;
 
-    public HTTPLineSender(URL url) throws IOException {
+    public UrlLineSender(URL url) throws IOException {
         this.url = url;
         refresh();
     }

@@ -1,9 +1,10 @@
-package cz.muni.fi.data_generator.pcapfile;
+package cz.muni.fi.data_generator.generator;
 
 import com.igormaznitsa.jbbp.io.JBBPBitInputStream;
 import com.igormaznitsa.jbbp.utils.JBBPUtils;
-import cz.muni.fi.data_generator.generator.DataLine;
-import cz.muni.fi.data_generator.generator.LineSource;
+import cz.muni.fi.data_generator.pcapfile_processing.PcapHeader;
+import cz.muni.fi.data_generator.pcapfile_processing.PcapIdentifier;
+import cz.muni.fi.data_generator.pcapfile_processing.PcapPacket;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,7 +15,6 @@ import java.io.IOException;
  * that one line for PcapLineSource means one packet in file. Pcap files contains also headers, if you are interested,
  * you can read it from field headerOfFile.
  *
- * Created by Lucka on 26.3.2015.
  */
 public class PcapLineSource implements LineSource {
     private JBBPBitInputStream inputStream;

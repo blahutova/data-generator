@@ -1,20 +1,50 @@
 package cz.muni.fi.data_generator.generator;
 
-import cz.muni.fi.data_generator.distributedSending.Connection;
-import cz.muni.fi.data_generator.distributedSending.Server;
+import cz.muni.fi.data_generator.distributed_sending.Connection;
+import cz.muni.fi.data_generator.distributed_sending.Server;
+import org.quartz.Job;
+import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 
 import java.io.IOException;
 import java.util.*;
 
 /**
- * Class with basic methods for sending data. User can start sending data
- * with normal speed, or he can choose his own coefficient of speed.
+ * Basic class for sending data. User can start sending data
+ * with normal speed, or he can choose his own coefficient of speed. Also he can
+ * send data to more computers than one. <br /><br />
  *
- * Created by Lucka on 10.2.2015.
+ * Example usage:<br />
+ * //provide the path to your file with data <br />
+ * File csv = new File("/path/to/file.csv"); <br />
+ * //create your implementation of LineSource and LineSender <br />
+ * HTTPLineSource lineSource = new HTTPLineSource(csv);<br />
+ * HTTPLineSender lineSender = new HTTPLineSender();<br />
+ * //create Generator with LineSource and LineSender<br />
+ * Generator generator = new Generator(lineSource, lineSender); <br />
+ * //start sending data to output<br />
+ * generator.startWithSpeed(0.5);<br />
+ * //don't forget to close the LineSource<br />
+ * lineSource.close();<br /><br />
+ *
+ * Sending output to more computers: <br />
+ * //create array with ports and hostnames of your computers<br />
+ * String[][] portsAndHostNames = {<br />
+ * {"1024", "localhost"},<br />
+ * {"1025", "localhost"},<br />
+ * {"1026", "localhost"},<br />
+ * {"1027", "localhost"},<br />
+ * };<br />
+ * //set ports and host names for generator<br />
+ * generator.setPortsAndHostNames(portsAndHostNames);<br />
+ * //start sending <br />
+ * generator.startDistributedSending();<br />
+ *
  */
-public class Generator {
+public class Generator extends TimerTask {
     private LineSource source;
     private LineSender lineSender;
+    private String[][] portsAndHostNames;
 
     /**
      * Constructor for Generator class. You must provide concrete LineSource and
@@ -82,8 +112,15 @@ public class Generator {
         return (long) ((secondLine.getTimestamp() - firstLine.getTimestamp()) * speedCoefficient);
     }
 
-    public void startDistributedSending(String[][] portsAndHostNames) throws IOException, InterruptedException {
-        //servers here are just for testing. They represent computers, where the data will be sent
+    /**
+     * Method for sending data to more computers. First, you must create
+     * array of names of ports and hosts and then set it in generator. Then you
+     * can start this method and send data to many computers.
+     *
+     * @throws IOException
+     * @throws InterruptedException
+     */
+    public void startDistributedSending() throws IOException, InterruptedException {
         createServersAccordingToPorts(portsAndHostNames);
         DataLine firstLine = source.nextLine();
         DataLine secondLine;
@@ -116,6 +153,21 @@ public class Generator {
         System.out.println((currentPC + 1) + ". computer: ");
         connection.sendDataLineToComputer(line);
         connection.readResponseFromComputer();
+    }
+
+    public void setPortsAndHostNames(String[][] portsAndHostNames) {
+        this.portsAndHostNames = portsAndHostNames;
+    }
+
+    @Override
+    public void run() {
+        try {
+            startDistributedSending();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 }
 

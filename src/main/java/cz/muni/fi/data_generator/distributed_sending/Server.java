@@ -1,8 +1,12 @@
-package cz.muni.fi.data_generator.distributedSending;//The server code Server.java:
+package cz.muni.fi.data_generator.distributed_sending;//The server code Server.java:
 
 import java.io.IOException;
 import java.net.ServerSocket;
 
+/**
+ * Class which represents server in distributed sending.
+ *
+ */
 public class Server {
     private ServerSocket serverSocket;
 
@@ -10,14 +14,14 @@ public class Server {
         try
         {
             serverSocket = new ServerSocket(port);
-            createThreadsForClients();
+            createThreadForClients();
         }
         catch (IOException e) {
             System.out.println("Exception on new ServerSocket: " + e);
         }
     }
 
-    public void createThreadsForClients() throws IOException {
+    public void createThreadForClients() throws IOException {
             TcpThread t = new TcpThread(serverSocket);
             t.start();
     }

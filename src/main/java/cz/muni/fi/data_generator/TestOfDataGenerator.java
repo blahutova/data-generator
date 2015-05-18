@@ -7,7 +7,13 @@ import cz.muni.fi.data_generator.generator.LineSource;
 import java.io.IOException;
 
 /**
- * Created by lucka on 29.3.2015.
+ * Class for testing sending function of generator.<br/><br/>
+ *
+ * Example usage:<br/>
+ * //create object TestOfDataGenerator<br/>
+ * TestOfDataGenerator generator = new TestOfDataGenerator(lineSource, lineSender);<br/>
+ * //try sending and watch numbers in output<br/>
+ * generator.start();<br/>
  */
 public class TestOfDataGenerator {
     private LineSource source;
@@ -72,6 +78,6 @@ public class TestOfDataGenerator {
     }
 
     public Long timeBetweenTwoLines(DataLine firstLine, DataLine secondLine, double speedCoefficient) {
-        return (long) ((secondLine.getTimestamp() - firstLine.getTimestamp()) * speedCoefficient * 1000);
+        return (long) ((secondLine.getTimestamp() - firstLine.getTimestamp()) * speedCoefficient);
     }
 }

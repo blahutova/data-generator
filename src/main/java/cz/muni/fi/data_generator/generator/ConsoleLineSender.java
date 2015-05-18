@@ -3,7 +3,6 @@ package cz.muni.fi.data_generator.generator;
 /**
  * Line sender for sending data to console.
  *
- * Created by Lucka on 10.2.2015.
  */
 public class ConsoleLineSender implements LineSender {
 

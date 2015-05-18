@@ -1,11 +1,10 @@
-package cz.muni.fi.data_generator.pcapfile;
+package cz.muni.fi.data_generator.pcapfile_processing;
 
 import com.igormaznitsa.jbbp.mapper.Bin;
 
 /**
  * Class representing one packet from pcap file.
  *
- * Created by Lucka on 26.3.2015.
  */
 @Bin
 public class PcapPacket {

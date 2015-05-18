@@ -1,4 +1,4 @@
-package cz.muni.fi.data_generator.httpserver;
+package cz.muni.fi.data_generator.generator;
 
 import cz.muni.fi.data_generator.generator.DataLine;
 import cz.muni.fi.data_generator.generator.LineSource;
@@ -32,7 +32,7 @@ public class HTTPLineSource implements LineSource {
     private final static int FIRST_DAY_OF_TRACING = 29;
     private final static int SECOND_DAY_OF_TRACING = 30;
     private final static int POSITION_OF_TIMESTAMP = 1;
-    private final static int MAX_SIZE_OF_BUFFER = 1000;
+    private final static int MAX_SIZE_OF_BUFFER = 10000;
     private Iterator<CSVRecord> csvParserIterator;
     private CSVParser parser;
     private File pathToCsv;

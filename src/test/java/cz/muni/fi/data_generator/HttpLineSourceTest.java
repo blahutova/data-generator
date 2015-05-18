@@ -1,6 +1,6 @@
 package cz.muni.fi.data_generator;
 
-import cz.muni.fi.data_generator.httpserver.HTTPLineSource;
+import cz.muni.fi.data_generator.generator.HTTPLineSource;
 import org.apache.commons.csv.CSVRecord;
 import org.junit.Before;
 import org.junit.Test;
